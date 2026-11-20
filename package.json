@@ -1,0 +1,17 @@
+{
+  "name": "apexlex-c1",
+  "version": "1.0.0",
+  "description": "ApexLex C1 - Aprendizado de Vocabulário Avançado de Inglês (A1-C1)",
+  "scripts": {
+    "sync": "npx cap sync android",
+    "open:android": "npx cap open android",
+    "build:apk": "cd android && ./gradlew assembleDebug"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.1.2",
+    "@capacitor/core": "^6.1.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.1.2"
+  }
+}

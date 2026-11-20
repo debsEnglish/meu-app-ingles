@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>ApexLex C1 — Vocabulário Avançado de Inglês</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#4f46e5" />
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-2: #f1f5f9;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #e2e8f0;
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --primary-soft: #eef2ff;
+      --accent: #0ea5e9;
+      --success: #10b981;
+      --success-soft: #d1fae5;
+      --warning: #f59e0b;
+      --warning-soft: #fef3c7;
+      --danger: #ef4444;
+      --danger-soft: #fee2e2;
+      --radius: 14px;
+      --shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+    }
+    html.dark {
+      --bg: #0b1120;
+      --surface: #1e293b;
+      --surface-2: #0f172a;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --primary: #6366f1;
+      --primary-hover: #818cf8;
+      --primary-soft: rgba(99, 102, 241, 0.16);
+      --accent: #38bdf8;
+      --success: #34d399;
+      --success-soft: rgba(16, 185, 129, 0.16);
+      --warning: #fbbf24;
+      --warning-soft: rgba(245, 158, 11, 0.16);
+      --danger: #f87171;
+      --danger-soft: rgba(239, 68, 68, 0.16);
+      --shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      padding-bottom: 84px;
+    }
+    header {
+      position: sticky; top: 0; z-index: 40;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: calc(12px + env(safe-area-inset-top)) 16px 12px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.15rem; }
+    .brand-badge {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: #fff; padding: 4px 9px; border-radius: 9px; font-size: 0.85rem;
+    }
+    .header-actions { display: flex; align-items: center; gap: 8px; }
+    .pill-stat {
+      background: var(--surface-2); border: 1px solid var(--border);
+      padding: 5px 10px; border-radius: 999px; font-size: 0.8rem; font-weight: 700;
+    }
+    button {
+      cursor: pointer; border: none; font-family: inherit; font-weight: 600;
+      border-radius: 10px; transition: 0.18s ease;
+    }
+    .btn-icon {
+      background: var(--surface-2); color: var(--text); border: 1px solid var(--border);
+      width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center;
+    }
+    .btn-primary { background: var(--primary); color: #fff; padding: 10px 16px; }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-secondary {
+      background: var(--surface-2); color: var(--text); border: 1px solid var(--border);
+      padding: 9px 14px;
+    }
+    .btn-sm { padding: 6px 11px; font-size: 0.82rem; border-radius: 8px; }
+    main { max-width: 980px; margin: 0 auto; padding: 18px 16px; }
+    .nav-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+      background: var(--surface); border-top: 1px solid var(--border);
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+    }
+    .nav-btn {
+      background: transparent; color: var(--text-muted);
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      padding: 6px 4px; font-size: 0.72rem; border-radius: 10px;
+    }
+    .nav-btn.active { color: var(--primary); background: var(--primary-soft); }
+    .nav-btn span.ico { font-size: 1.15rem; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow);
+      margin-bottom: 16px;
+    }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+    .track-chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 14px; }
+    .chip {
+      white-space: nowrap; padding: 7px 13px; border-radius: 999px;
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--text-muted); font-size: 0.84rem;
+    }
+    .chip.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .word-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 16px; margin-bottom: 12px;
+    }
+    .word-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; flex-wrap: wrap; }
+    .word-title { font-size: 1.25rem; font-weight: 800; color: var(--primary); }
+    .ipa { font-family: "Lucida Sans Unicode", monospace; color: var(--text-muted); font-size: 0.9rem; }
+    .pt-phon { background: var(--primary-soft); color: var(--primary); padding: 2px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; }
+    .badge { padding: 3px 8px; border-radius: 6px; font-size: 0.74rem; font-weight: 700; }
+    .badge-c1 { background: var(--primary-soft); color: var(--primary); }
+    .badge-nova { background: var(--surface-2); color: var(--text-muted); }
+    .badge-aprendendo { background: var(--warning-soft); color: var(--warning); }
+    .badge-revisar { background: var(--danger-soft); color: var(--danger); }
+    .badge-dominada { background: var(--success-soft); color: var(--success); }
+    .family-box { font-size: 0.83rem; color: var(--text-muted); margin: 8px 0; padding: 8px 10px; background: var(--surface-2); border-radius: 8px; }
+    .ex-list { margin-top: 8px; padding-left: 16px; font-size: 0.9rem; }
+    .ex-list li { margin-bottom: 4px; }
+    .step-tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
+    .step-tab { padding: 10px 6px; background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); font-size: 0.82rem; }
+    .step-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .highlight-word {
+      background: var(--primary-soft); color: var(--primary); font-weight: 700;
+      padding: 1px 5px; border-radius: 5px; cursor: pointer; border-bottom: 2px solid var(--primary);
+    }
+    input[type="text"], textarea, select {
+      width: 100%; padding: 10px 12px; border-radius: 10px;
+      border: 1px solid var(--border); background: var(--surface-2);
+      color: var(--text); font-family: inherit; font-size: 0.95rem;
+    }
+    .progress-bar { width: 100%; height: 12px; background: var(--surface-2); border-radius: 999px; overflow: hidden; margin: 8px 0; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #4f46e5, #10b981); transition: width 0.3s ease; }
+    .flashcard {
+      min-height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; cursor: pointer; padding: 24px;
+    }
+    .hidden { display: none !important; }
+    .popover {
+      position: fixed; bottom: 86px; left: 16px; right: 16px; max-width: 540px; margin: 0 auto;
+      background: var(--surface); border: 2px solid var(--primary); border-radius: 14px;
+      padding: 14px; box-shadow: 0 12px 32px rgba(0,0,0,0.28); z-index: 60;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <span class="brand-badge">C1</span>
+      <span>ApexLex</span>
+    </div>
+    <div class="header-actions">
+      <span class="pill-stat" id="streakBadge">🔥 1 dia</span>
+      <span class="pill-stat" id="masteredHeader">0 / 10.000</span>
+      <button class="btn-icon" id="themeToggle" title="Alternar Tema">🌓</button>
+    </div>
+  </header>
+
+  <main id="appMain"></main>
+
+  <div id="wordPopover" class="popover hidden"></div>
+
+  <nav class="nav-bar">
+    <button class="nav-btn active" data-tab="tracks"><span class="ico">📚</span><span>Trilhas</span></button>
+    <button class="nav-btn" data-tab="study"><span class="ico">🎯</span><span>4 Habilidades</span></button>
+    <button class="nav-btn" data-tab="flashcards"><span class="ico">⚡</span><span>Flashcards</span></button>
+    <button class="nav-btn" data-tab="progress"><span class="ico">📊</span><span>Progresso</span></button>
+  </nav>
+
+  <script>
+    const INITIAL_VOCAB = [
+      // Negócios e Economia
+      { id: "be1", track: "Negócios e Economia", word: "ubiquitous", pos: "adjective", level: "C1", ipa: "/juːˈbɪk.wɪ.təs/", ptPhon: "iu-BÍ-qui-tâs", family: "ubiquity (n), ubiquitously (adv)", defPt: "Onipresente; encontrado em toda parte simultaneamente.", defEn: "Present, appearing, or found everywhere.", ex1: "Algorithmic pricing has become ubiquitous across global e-commerce platforms.", ex2: "Smartphones are now ubiquitous tools in modern corporate workflows." },
+      { id: "be2", track: "Negócios e Economia", word: "mitigate", pos: "verb", level: "C1", ipa: "/ˈmɪt.ɪ.ɡeɪt/", ptPhon: "MÍ-ti-gueit", family: "mitigation (n), mitigating (adj)", defPt: "Mitigar, atenuar ou reduzir a gravidade de um risco ou prejuízo.", defEn: "Make less severe, serious, or painful.", ex1: "Diversifying supply chains helps mitigate geopolitical disruptions.", ex2: "Central banks raised rates to mitigate inflationary pressures." },
+      { id: "be3", track: "Negócios e Economia", word: "leveraging", pos: "verb / noun", level: "C1", ipa: "/ˈlev.ər.ɪdʒ.ɪŋ/", ptPhon: "LÉ-vâ-ri-djin", family: "leverage (n/v), leveraged (adj)", defPt: "Alavancar; utilizar um recurso estrategicamente para obter vantagem máxima.", defEn: "Using something to maximum advantage.", ex1: "The firm is leveraging predictive analytics to retain enterprise clients.", ex2: "By leveraging economies of scale, the startup undercut incumbent rivals." },
+      { id: "be4", track: "Negócios e Economia", word: "lucrative", pos: "adjective", level: "C1", ipa: "/ˈluː.krə.tɪv/", ptPhon: "LÚ-crâ-tiv", family: "lucratively (adv), lucrativeness (n)", defPt: "Lucrativo, altamente rentável.", defEn: "Producing a great deal of profit.", ex1: "Cloud infrastructure proved far more lucrative than consumer hardware.", ex2: "She negotiated a lucrative licensing agreement in Asia." },
+      { id: "be5", track: "Negócios e Economia", word: "unprecedented", pos: "adjective", level: "C1", ipa: "/ʌnˈpres.ɪ.den.tɪd/", ptPhon: "ân-PRÉ-si-den-tid", family: "precedent (n), unprecedentedly (adv)", defPt: "Sem precedentes; nunca visto ou ocorrido antes.", defEn: "Never done or known before.", ex1: "The merger triggered unprecedented regulatory scrutiny in Brussels.", ex2: "Remote work expanded at an unprecedented pace." },
+
+      // Ciência e Tecnologia
+      { id: "ct1", track: "Ciência e Tecnologia", word: "paradigm", pos: "noun", level: "C1", ipa: "/ˈpær.ə.daɪm/", ptPhon: "PÉ-râ-daim", family: "paradigmatic (adj)", defPt: "Paradigma; modelo conceitual ou padrão dominante numa área.", defEn: "A typical example or pattern of something; a worldview.", ex1: "Generative models represent a major paradigm shift in human-computer interaction.", ex2: "Quantum computing challenges the classical paradigm of binary logic." },
+      { id: "ct2", track: "Ciência e Tecnologia", word: "empirical", pos: "adjective", level: "C1", ipa: "/ɪmˈpɪr.ɪ.kəl/", ptPhon: "im-PÍ-ri-câl", family: "empirically (adv), empiricism (n)", defPt: "Empírico; baseado em observação e experimentação verificável.", defEn: "Based on, concerned with, or verifiable by observation or experience.", ex1: "The hypothesis lacks rigorous empirical validation.", ex2: "Empirical evidence consistently supports spaced repetition for memory retention." },
+      { id: "ct3", track: "Ciência e Tecnologia", word: "anomaly", pos: "noun", level: "C1", ipa: "/əˈnɒm.ə.li/", ptPhon: "â-NÓ-mâ-li", family: "anomalous (adj), anomalously (adv)", defPt: "Anomalia; desvio inesperado da norma ou padrão.", defEn: "Something that deviates from what is standard, normal, or expected.", ex1: "Astronomers detected a gravitational anomaly near the outer orbit.", ex2: "The security system flagged the sudden data spike as an anomaly." },
+      { id: "ct4", track: "Ciência e Tecnologia", word: "obsolete", pos: "adjective", level: "C1", ipa: "/ˌɒb.səˈliːt/", ptPhon: "ób-sâ-LÍT", family: "obsolescence (n)", defPt: "Obsoleto, ultrapassado, fora de uso.", defEn: "No longer produced or used; out of date.", ex1: "Rapid advancements in battery chemistry could render fossil engines obsolete.", ex2: "Legacy encryption protocols are now considered obsolete." },
+
+      // Psicologia e Comportamento
+      { id: "pb1", track: "Psicologia e Comportamento", word: "cognitive dissonance", pos: "noun phrase", level: "C1", ipa: "/ˈkɒɡ.nə.tɪv ˈdɪs.ən.əns/", ptPhon: "CÓ-gui-nâ-tiv DÍ-sâ-nâns", family: "cognition (n), dissonant (adj)", defPt: "Dissonância cognitiva; desconforto mental causado por crenças ou atitudes conflitantes.", defEn: "Mental discomfort resulting from holding two conflicting beliefs or values.", ex1: "Consumers often rationalize impulsive purchases to reduce cognitive dissonance.", ex2: "Cognitive dissonance can motivate behavioral change when contradictions become undeniable." },
+      { id: "pb2", track: "Psicologia e Comportamento", word: "resilience", pos: "noun", level: "C1", ipa: "/rɪˈzɪl.jəns/", ptPhon: "ri-ZÍ-li-âns", family: "resilient (adj), resiliently (adv)", defPt: "Resiliência; capacidade psicológica de se recuperar frente a adversidades.", defEn: "The capacity to withstand or to recover quickly from difficulties.", ex1: "Emotional resilience is strengthened through supportive interpersonal attachments.", ex2: "Longitudinal studies link cognitive flexibility with higher psychological resilience." },
+      { id: "pb3", track: "Psicologia e Comportamento", word: "intrinsic", pos: "adjective", level: "C1", ipa: "/ɪnˈtrɪn.zɪk/", ptPhon: "in-TRÍN-zik", family: "intrinsically (adv)", defPt: "Intrínseco; inerente, essencial à própria natureza de algo.", defEn: "Belonging naturally; essential.", ex1: "Intrinsic motivation sustains long-term language mastery better than external rewards.", ex2: "Empathy is an intrinsic component of effective therapeutic alliances." },
+      { id: "pb4", track: "Psicologia e Comportamento", word: "susceptible", pos: "adjective", level: "C1", ipa: "/səˈsep.tə.bəl/", ptPhon: "sâ-SÉP-tâ-bâl", family: "susceptibility (n)", defPt: "Suscetível, vulnerável ou facilmente influenciável por algo.", defEn: "Likely or liable to be influenced or harmed by a particular thing.", ex1: "Sleep-deprived individuals are highly susceptible to confirmation bias.", ex2: "Adolescents remain particularly susceptible to peer pressure." },
+
+      // Sociedade e Direito
+      { id: "sd1", track: "Sociedade e Direito", word: "accountability", pos: "noun", level: "C1", ipa: "/əˌkaʊn.təˈbɪl.ə.ti/", ptPhon: "â-caun-tâ-BÍ-lâ-ti", family: "accountable (adj)", defPt: "Responsabilização, prestação de contas e transparência institucional.", defEn: "The fact or condition of being responsible and answerable for actions.", ex1: "Democratic institutions rely on judicial independence and public accountability.", ex2: "New AI regulations demand algorithmic accountability from tech corporations." },
+      { id: "sd2", track: "Sociedade e Direito", word: "jurisdiction", pos: "noun", level: "C1", ipa: "/ˌdʒʊə.rɪsˈdɪk.ʃən/", ptPhon: "dju-ris-DÍC-shân", family: "jurisdictional (adj)", defPt: "Jurisdição; autoridade legal ou território sob competência de um tribunal.", defEn: "The official power to make legal decisions and judgments.", ex1: "Cross-border cybercrime often complicates questions of national jurisdiction.", ex2: "The appellate court ruled that the agency had exceeded its jurisdiction." },
+      { id: "sd3", track: "Sociedade e Direito", word: "infringe", pos: "verb", level: "C1", ipa: "/ɪnˈfrɪndʒ/", ptPhon: "in-FRÍNDJ", family: "infringement (n)", defPt: "Infringir, violar ou invadir direitos ou leis.", defEn: "Actively break the terms of a law or encroach on rights.", ex1: "Critics argued the surveillance bill would infringe upon fundamental privacy rights.", ex2: "The court found the company guilty of infringing patent protections." },
+
+      // Artes e Filosofia
+      { id: "af1", track: "Artes e Filosofia", word: "ephemeral", pos: "adjective", level: "C1", ipa: "/ɪˈfem.ər.əl/", ptPhon: "i-FÉ-mâ-râl", family: "ephemerality (n), ephemerally (adv)", defPt: "Efêmero; que dura por um tempo muito breve, passageiro.", defEn: "Lasting for a very short time.", ex1: "Performance art deliberately embraces the ephemeral nature of live experience.", ex2: "Fame in the digital age has become increasingly ephemeral." },
+      { id: "af2", track: "Artes e Filosofia", word: "juxtaposition", pos: "noun", level: "C1", ipa: "/ˌdʒʌk.stə.pəˈzɪʃ.ən/", ptPhon: "djâks-tâ-pâ-ZÍ-shân", family: "juxtapose (v)", defPt: "Justaposição; colocação lado a lado de elementos contrastantes.", defEn: "The fact of two things being seen or placed close together with contrasting effect.", ex1: "The film creates tension through the juxtaposition of serene landscapes and harsh dialogue.", ex2: "Her essay explores the juxtaposition of classical stoicism and modern existentialism." },
+      { id: "af3", track: "Artes e Filosofia", word: "nuance", pos: "noun", level: "C1", ipa: "/ˈnjuː.ɑːns/", ptPhon: "NIÚ-âns", family: "nuanced (adj)", defPt: "Nuance; sutileza de significado, expressão ou tonalidade.", defEn: "A subtle difference in or shade of meaning, expression, or sound.", ex1: "Literary translation requires capturing cultural nuance without losing rhythm.", ex2: "The director offered a deeply nuanced portrayal of moral ambiguity." },
+
+      // Phrasal Verbs Avançados
+      { id: "pv1", track: "Phrasal Verbs Avançados", word: "account for", pos: "phrasal verb", level: "C1", ipa: "/əˈkaʊnt fɔːr/", ptPhon: "â-CAUNT fór", family: "accountable (adj)", defPt: "Explicar a causa de algo; representar uma parcela ou proporção.", defEn: "Explain the reason for; constitute a specified proportion.", ex1: "Renewable sources now account for over forty percent of the grid's electricity.", ex2: "Current models fail to account for rapid shifts in consumer sentiment." },
+      { id: "pv2", track: "Phrasal Verbs Avançados", word: "stem from", pos: "phrasal verb", level: "C1", ipa: "/stem frɒm/", ptPhon: "STÉM fróm", family: "stem (n/v)", defPt: "Originar-se de, decorrer de, ter raiz em.", defEn: "Originate in or be caused by.", ex1: "Many communication breakdowns stem from unstated assumptions.", ex2: "The policy deadlock stems from deeply diverging fiscal priorities." },
+      { id: "pv3", track: "Phrasal Verbs Avançados", word: "phase out", pos: "phrasal verb", level: "C1", ipa: "/feɪz aʊt/", ptPhon: "FÊIZ aut", family: "phase-out (n)", defPt: "Eliminar ou descontinuar gradualmente.", defEn: "Gradually stop using or providing something.", ex1: "Several municipalities plan to phase out single-use plastics by next year.", ex2: "The software vendor will phase out support for older operating systems." },
+
+      // Idioms e Conectivos Acadêmicos
+      { id: "ic1", track: "Idioms e Conectivos Acadêmicos", word: "notwithstanding", pos: "preposition / adverb", level: "C1", ipa: "/ˌnɒt.wɪðˈstæn.dɪŋ/", ptPhon: "nót-uith-STÉN-din", family: "withstand (v)", defPt: "Não obstante, apesar de, contudo.", defEn: "In spite of; nevertheless.", ex1: "Notwithstanding minor methodological flaws, the study's conclusions remain robust.", ex2: "Budget constraints notwithstanding, the research team delivered ahead of schedule." },
+      { id: "ic2", track: "Idioms e Conectivos Acadêmicos", word: "albeit", pos: "conjunction", level: "C1", ipa: "/ɔːlˈbiː.ɪt/", ptPhon: "ól-BÍ-it", family: "—", defPt: "Embora, ainda que, se bem que (usado antes de adjetivos ou sintagmas).", defEn: "Although; even though.", ex1: "The recovery has been steady, albeit slower than economists initially projected.", ex2: "She accepted the compromise, albeit with considerable reluctance." },
+      { id: "ic3", track: "Idioms e Conectivos Acadêmicos", word: "by and large", pos: "idiom", level: "C1", ipa: "/baɪ ənd lɑːdʒ/", ptPhon: "bai ând LÁRDJ", family: "—", defPt: "De modo geral, no conjunto, em linhas gerais.", defEn: "On the whole; everything considered.", ex1: "By and large, participants reported higher focus during morning sessions.", ex2: "The transition to hybrid learning has, by and large, proven successful." }
+    ];
+
+    const EXTRA_C1_POOL = [
+      { track: "Psicologia e Comportamento", word: "altruism", pos: "noun", level: "C1", ipa: "/ˈæl.tru.ɪ.zəm/", ptPhon: "ÉL-tru-i-zâm", family: "altruistic (adj)", defPt: "Altruísmo; preocupação desinteressada com o bem-estar alheio.", defEn: "Disinterested and selfless concern for the well-being of others.", ex1: "Evolutionary psychologists debate whether pure altruism exists in nature.", ex2: "Reciprocal altruism strengthens social cohesion within small communities." },
+      { track: "Negócios e Economia", word: "consolidate", pos: "verb", level: "C1", ipa: "/kənˈsɒl.ɪ.deɪt/", ptPhon: "cân-SÓ-li-deit", family: "consolidation (n)", defPt: "Consolidar, unificar ou fortalecer posição financeira/estratégica.", defEn: "Make something physically stronger or more solid; combine into a single unit.", ex1: "The acquisition allowed the group to consolidate its regional market share.", ex2: "Reviewing notes daily helps consolidate new vocabulary into long-term memory." },
+      { track: "Ciência e Tecnologia", word: "catalyst", pos: "noun", level: "C1", ipa: "/ˈkæt.əl.ɪst/", ptPhon: "KÉ-tâ-list", family: "catalyze (v), catalytic (adj)", defPt: "Catalisador; agente que acelera uma reação ou transformação.", defEn: "A substance or person that precipitates an event or change.", ex1: "Open-source datasets acted as a catalyst for breakthroughs in speech recognition.", ex2: "The enzyme serves as a biological catalyst in cellular metabolism." },
+      { track: "Sociedade e Direito", word: "precedent", pos: "noun", level: "C1", ipa: "/ˈpres.ɪ.dənt/", ptPhon: "PRÉ-si-dânt", family: "unprecedented (adj)", defPt: "Precedente jurídico ou histórico que serve de referência futura.", defEn: "An earlier event or action regarded as an example or guide.", ex1: "The Supreme Court decision set a landmark precedent for digital privacy.", ex2: "Diplomats warned that unilateral action would establish a dangerous precedent." },
+      { track: "Idioms e Conectivos Acadêmicos", word: "conversely", pos: "adverb", level: "C1", ipa: "/ˈkɒn.vɜːs.li/", ptPhon: "CÓN-vârs-li", family: "converse (n/adj)", defPt: "Inversamente, por outro lado, em sentido oposto.", defEn: "Introducing a statement or idea that reverses one just made.", ex1: "High stress impairs working memory; conversely, aerobic exercise enhances neuroplasticity.", ex2: "Urban districts grew rapidly; conversely, rural towns experienced depopulation." }
+    ];
+
+    const STORAGE_KEY = "apexlex_c1_android_v1";
+    let state = loadState();
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) return JSON.parse(raw);
+      } catch (e) {}
+      return {
+        theme: "light",
+        tab: "tracks",
+        selectedTrack: "Todas",
+        vocab: INITIAL_VOCAB,
+        srs: {}, // id -> { status: 'Nova'|'Aprendendo'|'Revisar'|'Dominada', reps: 0, nextReview: ts }
+        baseKnownCount: 2500, // A1-B2 baseline adjustable
+        dailyGoal: 10,
+        todayDone: 0,
+        streak: 1,
+        lastStudyDate: new Date().toISOString().slice(0, 10),
+        sessionIds: INITIAL_VOCAB.slice(0, 6).map(w => w.id),
+        studyStep: 0,
+        accent: "en-US",
+        rate: 1.0,
+        fcIndex: 0,
+        fcFlipped: false
+      };
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      updateHeader();
+    }
+
+    function applyTheme() {
+      document.documentElement.classList.toggle("dark", state.theme === "dark");
+    }
+
+    function getWordStatus(id) {
+      return (state.srs[id] && state.srs[id].status) || "Nova";
+    }
+
+    function updateSRS(id, quality) {
+      // quality: 1 (Errei/Revisar), 2 (Difícil/Aprendendo), 3 (Bom/Aprendendo->Dominada), 4 (Fácil/Dominada)
+      const cur = state.srs[id] || { status: "Nova", reps: 0, nextReview: Date.now() };
+      let reps = cur.reps;
+      let status = cur.status;
+      let days = 1;
+
+      if (quality === 1) { reps = 0; status = "Revisar"; days = 0; }
+      else if (quality === 2) { reps += 1; status = "Aprendendo"; days = 1; }
+      else if (quality === 3) { reps += 1; status = reps >= 2 ? "Dominada" : "Aprendendo"; days = reps >= 2 ? 7 : 3; }
+      else { reps += 2; status = "Dominada"; days = 14; }
+
+      state.srs[id] = { status, reps, nextReview: Date.now() + days * 86400000 };
+
+      const today = new Date().toISOString().slice(0, 10);
+      if (state.lastStudyDate !== today) {
+        state.streak += 1;
+        state.todayDone = 0;
+        state.lastStudyDate = today;
+      }
+      state.todayDone += 1;
+      saveState();
+    }
+
+    function speak(text, rateOverride) {
+      if (!("speechSynthesis" in window)) {
+        alert("Síntese de voz não suportada neste dispositivo.");
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = state.accent;
+      u.rate = rateOverride || state.rate;
+      const voices = window.speechSynthesis.getVoices();
+      const match = voices.find(v => v.lang && v.lang.toLowerCase().includes(state.accent.toLowerCase()));
+      if (match) u.voice = match;
+      window.speechSynthesis.speak(u);
+    }
+
+    function updateHeader() {
+      const masteredC1 = state.vocab.filter(w => getWordStatus(w.id) === "Dominada").length;
+      const total = state.baseKnownCount + masteredC1;
+      document.getElementById("masteredHeader").textContent = `${total.toLocaleString("pt-BR")} / 10.000`;
+      document.getElementById("streakBadge").textContent = `🔥 ${state.streak}d`;
+    }
+
+    function showPopover(wordObj) {
+      const pop = document.getElementById("wordPopover");
+      pop.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <div>
+            <strong style="font-size:1.1rem;color:var(--primary)">${wordObj.word}</strong>
+            <span class="ipa" style="margin-left:6px">${wordObj.ipa}</span>
+            <span class="pt-phon" style="margin-left:6px">${wordObj.ptPhon}</span>
+          </div>
+          <button class="btn-sm btn-secondary" onclick="document.getElementById('wordPopover').classList.add('hidden')">✕</button>
+        </div>
+        <p style="font-size:0.9rem;margin-bottom:8px">${wordObj.defPt}</p>
+        <div style="display:flex;gap:8px;">
+          <button class="btn-sm btn-primary" onclick="speak('${wordObj.word.replace(/'/g, "\'")}')">🔊 Ouvir Palavra</button>
+          <button class="btn-sm btn-secondary" onclick="speak('${wordObj.ex1.replace(/'/g, "\'")}')">🔊 Ouvir Exemplo</button>
+        </div>
+      `;
+      pop.classList.remove("hidden");
+    }
+
+    function generateMoreWords() {
+      const existing = new Set(state.vocab.map(w => w.word.toLowerCase()));
+      let added = 0;
+      EXTRA_C1_POOL.forEach((item, idx) => {
+        if (!existing.has(item.word.toLowerCase())) {
+          state.vocab.unshift({ id: "gen_" + Date.now() + "_" + idx, ...item });
+          added++;
+        }
+      });
+      if (added === 0) {
+        const n = state.vocab.length + 1;
+        state.vocab.unshift({
+          id: "gen_" + Date.now(),
+          track: state.selectedTrack === "Todas" ? "Ciência e Tecnologia" : state.selectedTrack,
+          word: "extrapolate #" + n,
+          pos: "verb", level: "C1", ipa: "/ɪkˈstræp.ə.leɪt/", ptPhon: "iks-TRÉ-pâ-leit",
+          family: "extrapolation (n)",
+          defPt: "Extrapolar; projetar conclusões além dos dados observados.",
+          defEn: "Extend the application of a method or conclusion to an unknown situation.",
+          ex1: "Researchers cautioned against extrapolating short-term trends over decades.",
+          ex2: "We can extrapolate future demand from current adoption metrics."
+        });
+      }
+      saveState();
+      render();
+    }
+
+    function renderTracks() {
+      const tracks = ["Todas", ...new Set(state.vocab.map(w => w.track))];
+      const filtered = state.selectedTrack === "Todas"
+        ? state.vocab
+        : state.vocab.filter(w => w.track === state.selectedTrack);
+
+      return `
+        <div class="card" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+          <div>
+            <h2 style="font-size:1.15rem;">Trilhas & Apostilas C1</h2>
+            <p style="font-size:0.86rem;color:var(--text-muted)">IPA, pronúncia aportuguesada, família lexical e treino integrado.</p>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn-secondary btn-sm" onclick="generateMoreWords()">+ Novo Bloco C1</button>
+            <button class="btn-primary btn-sm" onclick="startSessionFromTrack()">Estudar Este Bloco →</button>
+          </div>
+        </div>
+
+        <div class="track-chips">
+          ${tracks.map(t => `<button class="chip ${state.selectedTrack === t ? "active" : ""}" onclick="selectTrack('${t}')">${t}</button>`).join("")}
+        </div>
+
+        ${filtered.map(w => {
+          const st = getWordStatus(w.id);
+          return `
+            <div class="word-card">
+              <div class="word-top">
+                <div>
+                  <span class="word-title">${w.word}</span>
+                  <span style="font-size:0.82rem;color:var(--text-muted);margin-left:6px;">(${w.pos})</span>
+                  <div style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
+                    <span class="ipa">${w.ipa}</span>
+                    <span class="pt-phon">🗣️ ${w.ptPhon}</span>
+                  </div>
+                </div>
+                <div style="display:flex;gap:6px;align-items:center;">
+                  <span class="badge badge-c1">${w.level}</span>
+                  <span class="badge badge-${st.toLowerCase()}">${st}</span>
+                  <button class="btn-icon" onclick="speak('${w.word.replace(/'/g, "\'")}')">🔊</button>
+                </div>
+              </div>
+              <div class="family-box"><strong>Família de palavras:</strong> ${w.family}</div>
+              <p style="font-size:0.93rem;"><strong>PT:</strong> ${w.defPt}</p>
+              <p style="font-size:0.88rem;color:var(--text-muted);"><strong>EN:</strong> ${w.defEn}</p>
+              <ul class="ex-list">
+                <li>${w.ex1} <button class="btn-sm btn-secondary" style="padding:2px 6px;" onclick="speak('${w.ex1.replace(/'/g, "\'")}')">🔊</button></li>
+                <li>${w.ex2} <button class="btn-sm btn-secondary" style="padding:2px 6px;" onclick="speak('${w.ex2.replace(/'/g, "\'")}')">🔊</button></li>
+              </ul>
+            </div>
+          `;
+        }).join("")}
+      `;
+    }
+
+    function selectTrack(t) {
+      state.selectedTrack = t;
+      saveState();
+      render();
+    }
+
+    function startSessionFromTrack() {
+      const pool = state.selectedTrack === "Todas"
+        ? state.vocab
+        : state.vocab.filter(w => w.track === state.selectedTrack);
+      state.sessionIds = pool.slice(0, 6).map(w => w.id);
+      state.studyStep = 0;
+      state.tab = "study";
+      saveState();
+      render();
+    }
+
+    function renderStudy() {
+      const words = state.sessionIds.map(id => state.vocab.find(w => w.id === id)).filter(Boolean);
+      const steps = ["1. Reading", "2. Listening", "3. Speaking", "4. Writing"];
+
+      let stepBody = "";
+      if (state.studyStep === 0) {
+        // READING
+        const passage = words.map(w => w.ex1).join(" ");
+        let interactiveText = passage;
+        words.forEach(w => {
+          const rx = new RegExp(`\b(${w.word.replace(/[.*+?^${}()|[\]\]/g, '\$&')})\b`, "gi");
+          interactiveText = interactiveText.replace(rx, `<span class="highlight-word" onclick="openWordById('${w.id}')">$1</span>`);
+        });
+        const target = words[0];
+        const clozeSentence = target.ex2.replace(new RegExp(target.word, "i"), "________");
+
+        stepBody = `
+          <div class="card">
+            <h3 style="margin-bottom:8px;">📖 Leitura Contextual C1</h3>
+            <p style="font-size:0.84rem;color:var(--text-muted);margin-bottom:12px;">Toque nas palavras destacadas para abrir fonética, tradução e áudio.</p>
+            <div style="padding:14px;background:var(--surface-2);border-radius:12px;font-size:1rem;line-height:1.75;">
+              ${interactiveText}
+            </div>
+          </div>
+          <div class="card">
+            <h4 style="margin-bottom:8px;">Exercício Cloze (Preencha a Lacuna)</h4>
+            <p style="margin-bottom:10px;">"${clozeSentence}"</p>
+            <div style="display:flex;gap:8px;">
+              <input type="text" id="clozeInput" placeholder="Digite a palavra C1 faltante..." />
+              <button class="btn-primary" onclick="checkCloze('${target.word}')">Verificar</button>
+            </div>
+            <p id="clozeFeedback" style="margin-top:8px;font-size:0.88rem;font-weight:600;"></p>
+          </div>
+        `;
+      } else if (state.studyStep === 1) {
+        // LISTENING
+        const target = words[1] || words[0];
+        stepBody = `
+          <div class="card">
+            <h3 style="margin-bottom:10px;">🎧 Escuta Ativa & Ditado</h3>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
+              <button class="btn-sm ${state.accent === 'en-US' ? 'btn-primary' : 'btn-secondary'}" onclick="setAccent('en-US')">🇺🇸 US</button>
+              <button class="btn-sm ${state.accent === 'en-GB' ? 'btn-primary' : 'btn-secondary'}" onclick="setAccent('en-GB')">🇬🇧 UK</button>
+              <button class="btn-sm ${state.rate === 0.75 ? 'btn-primary' : 'btn-secondary'}" onclick="setRate(0.75)">0.75x</button>
+              <button class="btn-sm ${state.rate === 1.0 ? 'btn-primary' : 'btn-secondary'}" onclick="setRate(1.0)">1.0x</button>
+              <button class="btn-sm ${state.rate === 1.25 ? 'btn-primary' : 'btn-secondary'}" onclick="setRate(1.25)">1.25x</button>
+            </div>
+            <div style="display:flex;gap:10px;margin-bottom:14px;">
+              <button class="btn-primary" onclick="speak('${target.word.replace(/'/g, "\'")}')">🔊 Ouvir Palavra</button>
+              <button class="btn-secondary" onclick="speak('${target.ex1.replace(/'/g, "\'")}')">🔊 Ouvir Frase Completa</button>
+            </div>
+            <label style="font-size:0.86rem;font-weight:600;">Ditado: digite a palavra que você ouviu:</label>
+            <div style="display:flex;gap:8px;margin-top:6px;">
+              <input type="text" id="dictationInput" placeholder="Escreva aqui..." />
+              <button class="btn-primary" onclick="checkDictation('${target.word}')">Conferir</button>
+            </div>
+            <p id="dictationFeedback" style="margin-top:8px;font-size:0.88rem;font-weight:600;"></p>
+          </div>
+        `;
+      } else if (state.studyStep === 2) {
+        // SPEAKING
+        const target = words[2] || words[0];
+        stepBody = `
+          <div class="card">
+            <h3 style="margin-bottom:8px;">🎙️ Prática de Pronúncia (Speaking)</h3>
+            <p style="font-size:0.86rem;color:var(--text-muted);margin-bottom:12px;">Ouça o modelo nativo e depois toque em gravar para testar sua pronúncia.</p>
+            <div style="padding:14px;background:var(--surface-2);border-radius:12px;margin-bottom:12px;">
+              <div style="font-size:1.25rem;font-weight:800;color:var(--primary);">${target.word}</div>
+              <div class="ipa">${target.ipa} • <span class="pt-phon">${target.ptPhon}</span></div>
+              <p style="margin-top:8px;font-size:0.95rem;">"${target.ex1}"</p>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button class="btn-secondary" onclick="speak('${target.ex1.replace(/'/g, "\'")}')">🔊 Ouvir Modelo</button>
+              <button class="btn-primary" onclick="startSpeechCheck('${target.ex1.replace(/'/g, "\'")}')">🎤 Gravar Minha Voz</button>
+            </div>
+            <div id="speechResult" style="margin-top:12px;font-size:0.9rem;"></div>
+          </div>
+        `;
+      } else {
+        // WRITING
+        const targets = words.slice(0, 4);
+        stepBody = `
+          <div class="card">
+            <h3 style="margin-bottom:8px;">✍️ Produção Escrita Ativa (Writing)</h3>
+            <p style="font-size:0.86rem;color:var(--text-muted);margin-bottom:10px;">Escreva um parágrafo coeso em inglês usando as palavras-alvo abaixo:</p>
+            <div id="writingChecklist" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+              ${targets.map(w => `<span class="badge badge-nova" id="chk_${w.id}">⬜ ${w.word}</span>`).join("")}
+            </div>
+            <textarea id="writingArea" rows="5" placeholder="Write an analytical C1 paragraph incorporating all target words..." oninput="evaluateWriting()"></textarea>
+            <div id="writingStats" style="margin-top:10px;font-size:0.85rem;color:var(--text-muted);">0 palavras escritas</div>
+            <button class="btn-primary" style="margin-top:12px;width:100%;" onclick="completeSession()">Concluir Sessão & Atualizar SRS ✅</button>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="step-tabs">
+          ${steps.map((s, idx) => `<button class="step-tab ${state.studyStep === idx ? 'active' : ''}" onclick="setStudyStep(${idx})">${s}</button>`).join("")}
+        </div>
+        ${stepBody}
+      `;
+    }
+
+    function openWordById(id) {
+      const w = state.vocab.find(item => item.id === id);
+      if (w) showPopover(w);
+    }
+
+    function setStudyStep(idx) { state.studyStep = idx; saveState(); render(); }
+    function setAccent(acc) { state.accent = acc; saveState(); render(); }
+    function setRate(r) { state.rate = r; saveState(); render(); }
+
+    function checkCloze(expected) {
+      const val = document.getElementById("clozeInput").value.trim().toLowerCase();
+      const fb = document.getElementById("clozeFeedback");
+      if (val === expected.toLowerCase()) {
+        fb.style.color = "var(--success)";
+        fb.textContent = "✅ Excelente! Resposta exata.";
+      } else {
+        fb.style.color = "var(--danger)";
+        fb.textContent = `❌ Quase lá. A palavra esperada é "${expected}".`;
+      }
+    }
+
+    function checkDictation(expected) {
+      const val = document.getElementById("dictationInput").value.trim().toLowerCase();
+      const fb = document.getElementById("dictationFeedback");
+      if (val === expected.toLowerCase()) {
+        fb.style.color = "var(--success)";
+        fb.textContent = "✅ Perfeito! Ortografia e compreensão auditiva corretas.";
+      } else {
+        fb.style.color = "var(--danger)";
+        fb.textContent = `❌ Você digitou "${val || '(vazio)'}". O correto é "${expected}".`;
+      }
+    }
+
+    function startSpeechCheck(expectedSentence) {
+      const resBox = document.getElementById("speechResult");
+      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SR) {
+        resBox.innerHTML = `<span style="color:var(--warning)">⚠️ Seu WebView/navegador não liberou reconhecimento de voz nativo. Pratique lendo em voz alta comparando com o áudio modelo.</span>`;
+        return;
+      }
+      const rec = new SR();
+      rec.lang = state.accent;
+      rec.interimResults = false;
+      resBox.innerHTML = `<strong>🎙️ Ouvindo... Fale agora!</strong>`;
+      rec.onresult = (e) => {
+        const transcript = e.results[0][0].transcript;
+        const expWords = expectedSentence.toLowerCase().replace(/[^a-z\s]/g, "").split(/\s+/);
+        const gotWords = new Set(transcript.toLowerCase().replace(/[^a-z\s]/g, "").split(/\s+/));
+        const hits = expWords.filter(w => gotWords.has(w)).length;
+        const pct = Math.round((hits / Math.max(1, expWords.length)) * 100);
+        resBox.innerHTML = `
+          <div style="padding:10px;background:var(--surface-2);border-radius:10px;">
+            <div><strong>Transcrição:</strong> "${transcript}"</div>
+            <div style="margin-top:4px;color:${pct >= 70 ? 'var(--success)' : 'var(--warning)'};font-weight:700;">
+              Precisão lexical: ${pct}%
+            </div>
+          </div>
+        `;
+      };
+      rec.onerror = (err) => {
+        resBox.innerHTML = `<span style="color:var(--danger)">Erro ao capturar áudio (${err.error}). Verifique a permissão de microfone do app.</span>`;
+      };
+      rec.start();
+    }
+
+    function evaluateWriting() {
+      const text = document.getElementById("writingArea").value.toLowerCase();
+      const words = state.sessionIds.map(id => state.vocab.find(w => w.id === id)).filter(Boolean).slice(0, 4);
+      let used = 0;
+      words.forEach(w => {
+        const stem = w.word.toLowerCase().slice(0, Math.max(4, w.word.length - 2));
+        const el = document.getElementById("chk_" + w.id);
+        if (text.includes(stem)) {
+          used++;
+          el.className = "badge badge-dominada";
+          el.textContent = "✅ " + w.word;
+        } else {
+          el.className = "badge badge-nova";
+          el.textContent = "⬜ " + w.word;
+        }
+      });
+      const count = text.trim() ? text.trim().split(/\s+/).length : 0;
+      document.getElementById("writingStats").textContent = `${count} palavras • ${used}/${words.length} termos-alvo aplicados`;
+    }
+
+    function completeSession() {
+      state.sessionIds.forEach(id => updateSRS(id, 3));
+      alert("Sessão concluída! As palavras avançaram no seu ciclo de Repetição Espaçada (SRS).");
+      state.tab = "progress";
+      saveState();
+      render();
+    }
+
+    function renderFlashcards() {
+      const card = state.vocab[state.fcIndex % state.vocab.length];
+      const st = getWordStatus(card.id);
+      return `
+        <div class="card" style="display:flex;justify-content:space-between;align-items:center;">
+          <span>Carta ${(state.fcIndex % state.vocab.length) + 1} de ${state.vocab.length}</span>
+          <span class="badge badge-${st.toLowerCase()}">${st}</span>
+        </div>
+
+        <div class="card flashcard" onclick="flipCard()">
+          ${!state.fcFlipped ? `
+            <span class="badge badge-c1" style="margin-bottom:12px;">${card.track}</span>
+            <h2 style="font-size:2rem;color:var(--primary);margin-bottom:8px;">${card.word}</h2>
+            <div class="ipa">${card.ipa}</div>
+            <p style="margin-top:18px;font-size:0.84rem;color:var(--text-muted);">Toque no cartão para revelar definição e exemplos</p>
+          ` : `
+            <div style="text-align:left;width:100%;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                <strong style="font-size:1.3rem;color:var(--primary);">${card.word}</strong>
+                <button class="btn-sm btn-primary" onclick="event.stopPropagation();speak('${card.word.replace(/'/g, "\'")}')">🔊 Ouvir</button>
+              </div>
+              <div class="pt-phon" style="display:inline-block;margin-bottom:10px;">🗣️ ${card.ptPhon}</div>
+              <p style="margin-bottom:6px;"><strong>PT:</strong> ${card.defPt}</p>
+              <p style="margin-bottom:10px;color:var(--text-muted);font-size:0.9rem;"><strong>EN:</strong> ${card.defEn}</p>
+              <div class="family-box"><strong>Exemplo C1:</strong> ${card.ex1}</div>
+            </div>
+          `}
+        </div>
+
+        <div class="grid-4">
+          <button class="btn-secondary" style="border-color:var(--danger);color:var(--danger);" onclick="rateCard('${card.id}', 1)">1. Errei</button>
+          <button class="btn-secondary" style="border-color:var(--warning);color:var(--warning);" onclick="rateCard('${card.id}', 2)">2. Difícil</button>
+          <button class="btn-secondary" style="border-color:var(--primary);color:var(--primary);" onclick="rateCard('${card.id}', 3)">3. Bom</button>
+          <button class="btn-secondary" style="border-color:var(--success);color:var(--success);" onclick="rateCard('${card.id}', 4)">4. Fácil</button>
+        </div>
+      `;
+    }
+
+    function flipCard() { state.fcFlipped = !state.fcFlipped; render(); }
+    function rateCard(id, q) {
+      updateSRS(id, q);
+      state.fcIndex += 1;
+      state.fcFlipped = false;
+      saveState();
+      render();
+    }
+
+    function renderProgress() {
+      const counts = { Nova: 0, Aprendendo: 0, Revisar: 0, Dominada: 0 };
+      state.vocab.forEach(w => { counts[getWordStatus(w.id)]++; });
+      const totalKnown = state.baseKnownCount + counts.Dominada;
+      const pct = Math.min(100, ((totalKnown / 10000) * 100)).toFixed(1);
+
+      return `
+        <div class="card">
+          <h3 style="margin-bottom:6px;">🎯 Meta Lexical: 10.000 Palavras (A1 → Topo C1)</h3>
+          <p style="font-size:0.9rem;color:var(--text-muted);">Você domina <strong>${totalKnown.toLocaleString("pt-BR")}</strong> de 10.000 palavras (${pct}%).</p>
+          <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+          <div style="margin-top:12px;">
+            <label style="font-size:0.84rem;font-weight:600;">Base lexical prévia (A1–B2 já dominadas):</label>
+            <div style="display:flex;gap:8px;margin-top:6px;">
+              <input type="number" id="baseInput" value="${state.baseKnownCount}" min="0" max="9000" />
+              <button class="btn-primary" onclick="updateBase()">Atualizar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-4" style="margin-bottom:16px;">
+          <div class="card" style="text-align:center;"><strong>${counts.Nova}</strong><div style="font-size:0.8rem;color:var(--text-muted)">Novas C1</div></div>
+          <div class="card" style="text-align:center;"><strong style="color:var(--warning)">${counts.Aprendendo}</strong><div style="font-size:0.8rem;color:var(--text-muted)">Aprendendo</div></div>
+          <div class="card" style="text-align:center;"><strong style="color:var(--danger)">${counts.Revisar}</strong><div style="font-size:0.8rem;color:var(--text-muted)">Revisar</div></div>
+          <div class="card" style="text-align:center;"><strong style="color:var(--success)">${counts.Dominada}</strong><div style="font-size:0.8rem;color:var(--text-muted)">Dominadas C1</div></div>
+        </div>
+
+        <div class="card">
+          <h4 style="margin-bottom:10px;">💾 Backup & Sincronização Offline</h4>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn-primary btn-sm" onclick="exportBackup()">Exportar Progresso (.JSON)</button>
+            <label class="btn-secondary btn-sm" style="cursor:pointer;">
+              Importar Backup (.JSON)
+              <input type="file" accept=".json" style="display:none;" onchange="importBackup(event)" />
+            </label>
+          </div>
+        </div>
+      `;
+    }
+
+    function updateBase() {
+      const v = parseInt(document.getElementById("baseInput").value, 10);
+      if (!isNaN(v) && v >= 0) {
+        state.baseKnownCount = v;
+        saveState();
+        render();
+      }
+    }
+
+    function exportBackup() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `apexlex-c1-backup-${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+    }
+
+    function importBackup(ev) {
+      const file = ev.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          state = JSON.parse(reader.result);
+          saveState();
+          applyTheme();
+          render();
+          alert("Backup restaurado com sucesso!");
+        } catch (e) {
+          alert("Arquivo JSON inválido.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function render() {
+      updateHeader();
+      document.querySelectorAll(".nav-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.tab === state.tab);
+      });
+      const main = document.getElementById("appMain");
+      if (state.tab === "tracks") main.innerHTML = renderTracks();
+      else if (state.tab === "study") main.innerHTML = renderStudy();
+      else if (state.tab === "flashcards") main.innerHTML = renderFlashcards();
+      else main.innerHTML = renderProgress();
+    }
+
+    document.querySelectorAll(".nav-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        state.tab = btn.dataset.tab;
+        document.getElementById("wordPopover").classList.add("hidden");
+        saveState();
+        render();
+      });
+    });
+
+    document.getElementById("themeToggle").addEventListener("click", () => {
+      state.theme = state.theme === "dark" ? "light" : "dark";
+      applyTheme();
+      saveState();
+    });
+
+    applyTheme();
+    render();
+  </script>
+</body>
+</html>

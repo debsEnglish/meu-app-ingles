@@ -1,0 +1,12 @@
+{
+  "appId": "com.apexlex.c1vocab",
+  "appName": "ApexLex C1",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "allowMixedContent": true,
+    "captureInput": true
+  }
+}
